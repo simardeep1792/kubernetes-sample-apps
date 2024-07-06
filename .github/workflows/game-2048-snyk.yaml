@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: npm install, build, and test
         run: |
@@ -43,17 +43,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Build App Image for Snyk container scanning
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
         with:
           context: ${{ env.PROJECT_DIR }}
           push: false
           tags: "${{ secrets.DOCKER_REGISTRY }}/${{ env.PROJECT_NAME }}:${{ github.sha }}"
 
       - name: Install Snyk
-        uses: snyk/actions/setup@master
+        uses: snyk/actions/setup@a1346e4eaf761d462da22c34c681dc06849b6851 # master
 
       - name: Check application container vulnerabilities
         run: |
@@ -68,14 +68,14 @@ jobs:
 
       - name: Upload Snyk report SARIF file
         if: ${{ always() }}
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@ddb6e87284e126d929442bea7a0f6f29b3fc6a0b # v2
         with:
           sarif_file: snyk-container-scan.sarif
           category: snyk-container-scan
           
       - name: Notify using Slack about Snyk Scan Issues
         if: ${{ always() }}
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@28ba43ae48961b90635b50953d216767a6bea486 # v3
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
@@ -106,10 +106,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@135ac0aa0eed4437d547c6f12c364d3006b42824 # v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
@@ -117,7 +117,7 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Push App Image to DigitalOcean Container Registry
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
         with:
           context: ${{ env.PROJECT_DIR }}
           push: true
@@ -129,10 +129,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install Snyk
-        uses: snyk/actions/setup@master
+        uses: snyk/actions/setup@a1346e4eaf761d462da22c34c681dc06849b6851 # master
 
       - name: Check for Kubernetes manifests vulnerabilities
         run: |
@@ -148,14 +148,14 @@ jobs:
     
       - name: Upload Snyk IAC SARIF file
         if: ${{ always() }}
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@ddb6e87284e126d929442bea7a0f6f29b3fc6a0b # v2
         with:
           sarif_file: ${{ env.PROJECT_DIR }}/snyk-iac-scan.sarif
           category: snyk-iac-scan
           
       - name: Notify using Slack about Snyk Scan Issues
         if: ${{ always() }}
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@28ba43ae48961b90635b50953d216767a6bea486 # v3
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
@@ -188,15 +188,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@135ac0aa0eed4437d547c6f12c364d3006b42824 # v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8 # v3
 
       - name: Configure kubectl
         run: |

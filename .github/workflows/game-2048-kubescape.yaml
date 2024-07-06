@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: npm install, build, and test
         run: |
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install Kubescape
         run: curl -s https://raw.githubusercontent.com/armosec/kubescape/master/install.sh | /bin/bash
@@ -55,7 +55,7 @@ jobs:
 
       - name: Notify using Slack about Kubescape Scan Issues
         if: ${{ always() }}
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@28ba43ae48961b90635b50953d216767a6bea486 # v3
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
@@ -86,10 +86,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@135ac0aa0eed4437d547c6f12c364d3006b42824 # v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
@@ -97,7 +97,7 @@ jobs:
         run: doctl registry login --expiry-seconds 600
 
       - name: Push App Image to DigitalOcean Container Registry
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
         with:
           context: ${{ env.PROJECT_DIR }}
           push: true
@@ -109,15 +109,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Install doctl
-        uses: digitalocean/action-doctl@v2
+        uses: digitalocean/action-doctl@135ac0aa0eed4437d547c6f12c364d3006b42824 # v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Install kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@901a10e89ea615cf61f57ac05cecdf23e7de06d8 # v3
 
       - name: Configure kubectl
         run: |
